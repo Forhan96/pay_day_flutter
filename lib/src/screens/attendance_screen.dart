@@ -24,8 +24,11 @@ class AttendanceScreen extends StatelessWidget {
       return Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
+            )),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -212,11 +215,73 @@ class AttendanceScreen extends StatelessWidget {
                 ],
               ),
             ),
-            ElevatedButton(
+            SizedBox(
+              height: 24.h,
+            ),
+            OutlinedButton(
               onPressed: () {
                 attendanceProvider.updateTime();
               },
-              child: Text("try"),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.logout),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Text(
+                    "Punch Out",
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 16.h,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 6.h,
+                  width: 20.w,
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: BorderRadius.all(Radius.circular(20))),
+                ),
+                SizedBox(
+                  width: 4.w,
+                ),
+                Container(
+                  height: 6.h,
+                  width: 6.h,
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: BorderRadius.all(Radius.circular(20))),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 24.h,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Attendance Logs",
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+                SizedBox(
+                  width: 4.w,
+                ),
+                Icon(
+                  Icons.arrow_forward,
+                  size: 16,
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
+              ],
             ),
           ],
         ),

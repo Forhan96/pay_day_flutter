@@ -35,7 +35,13 @@ ThemeData buildLightTheme(BuildContext context) {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.black.withOpacity(0.2),
+        backgroundColor: AppColors.white.withOpacity(0.3),
+        foregroundColor: AppColors.white,
+        minimumSize: const Size.fromHeight(48),
+        side: const BorderSide(color: AppColors.white, width: 1.5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // <-- Radius
+        ),
       ),
     ),
     colorScheme: const ColorScheme.light(
