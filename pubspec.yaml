@@ -24,6 +24,10 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   flutter_svg: ^1.1.6
   intl: ^0.18.0
+  dart_ipify: ^1.1.1
+  google_maps_flutter: ^2.2.3
+  geolocator: ^9.0.2
+  geocoding: ^2.0.5
 
 dev_dependencies:
   flutter_test:

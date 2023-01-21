@@ -6,18 +6,20 @@ ThemeData buildLightTheme(BuildContext context) {
   final base = ThemeData.light();
   return base.copyWith(
     primaryColor: AppColors.primaryColor,
-    unselectedWidgetColor: AppColors.black.withOpacity(0.4),
+    unselectedWidgetColor: AppColors.black.withOpacity(0.2),
     focusColor: AppColors.primaryColor,
     errorColor: AppColors.complementaryColor,
     disabledColor: AppColors.black.withOpacity(0.3),
     shadowColor: AppColors.black.withOpacity(0.9),
-    dividerColor: AppColors.white,
+    dividerColor: AppColors.black.withOpacity(0.5),
+
     appBarTheme: AppBarTheme(
       color: AppColors.white,
       foregroundColor: AppColors.black.withOpacity(0.2),
       shadowColor: AppColors.black.withOpacity(0.2),
       elevation: 1,
     ),
+    bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.transparent),
     // buttonTheme: ButtonThemeData(
     //   buttonColor: Colors.yellow,
     //   textTheme: ButtonTextTheme.primary, //  <-- dark text for light background
@@ -29,23 +31,25 @@ ThemeData buildLightTheme(BuildContext context) {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.greenColor,
         foregroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // <-- Radius
+        ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        backgroundColor: AppColors.white.withOpacity(0.3),
-        foregroundColor: AppColors.white,
-        minimumSize: const Size.fromHeight(48),
-        side: const BorderSide(color: AppColors.white, width: 1.5),
+        backgroundColor: Colors.transparent,
+        foregroundColor: AppColors.black.withOpacity(0.5),
+        side: BorderSide(color: AppColors.black.withOpacity(0.5), width: 1.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8), // <-- Radius
         ),
       ),
     ),
     colorScheme: const ColorScheme.light(
-      // secondary: AppColors.secondaryColor,
+      secondary: AppColors.black,
       onSecondary: Colors.white,
       // onTertiary: Colors.black,
       tertiary: AppColors.complementaryColor,

@@ -1,13 +1,36 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:pay_day/src/components/punch_bottomsheet.dart';
+import 'package:pay_day/src/components/time_item.dart';
 import 'package:pay_day/src/providers/attendance_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-class AttendanceScreen extends StatelessWidget {
+class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AttendanceScreen> createState() => _AttendanceScreenState();
+}
+
+class _AttendanceScreenState extends State<AttendanceScreen> {
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) async {
+      AttendanceProvider attendanceProvider = Provider.of<AttendanceProvider>(context, listen: false);
+      attendanceProvider.updateTime();
+      timer = Timer.periodic(const Duration(seconds: 60), (Timer t) => attendanceProvider.updateTime());
+      attendanceProvider.updateTime();
+      attendanceProvider.getIp();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +42,19 @@ class AttendanceScreen extends StatelessWidget {
     );
   }
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   Widget _buildBody(BuildContext context) {
     return Consumer<AttendanceProvider>(builder: (context, attendanceProvider, child) {
       return Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(16),
               bottomRight: Radius.circular(16),
             )),
@@ -46,7 +75,6 @@ class AttendanceScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    SizedBox(),
                     Text(
                       DateFormat.MMMMEEEEd().format(DateTime.now()),
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
@@ -134,83 +162,41 @@ class AttendanceScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "In",
-                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
-                      ),
-                      SizedBox(),
-                      Text(
-                        attendanceProvider.inTime ?? '-',
-                        style: Theme.of(context).textTheme.headline6?.copyWith(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ],
+                  TimeItem(
+                    name: 'In',
+                    nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                    value: attendanceProvider.inTime ?? '-',
+                    valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    showDivider: false,
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      VerticalDivider(),
-                      SizedBox(
-                        width: 20.h,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Out",
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondary,
-                                ),
-                          ),
-                          SizedBox(),
-                          Text(
-                            '11:00',
-                            style: Theme.of(context).textTheme.headline6?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  TimeItem(
+                    name: 'Out',
+                    nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                    value: '11:00',
+                    valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    dividerColor: Theme.of(context).colorScheme.onSecondary,
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      VerticalDivider(),
-                      SizedBox(
-                        width: 20.h,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Balance",
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondary,
-                                ),
-                          ),
-                          SizedBox(),
-                          Text(
-                            '-2h 39m',
-                            style: Theme.of(context).textTheme.headline6?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSecondary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  TimeItem(
+                    name: 'Balance',
+                    nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                    value: '-2h 39m',
+                    valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    dividerColor: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ],
               ),
@@ -219,13 +205,32 @@ class AttendanceScreen extends StatelessWidget {
               height: 24.h,
             ),
             OutlinedButton(
-              onPressed: () {
-                attendanceProvider.updateTime();
+              onPressed: () async {
+                await attendanceProvider.getUserCurrentLocation();
+                if (attendanceProvider.currentPosition != null) {
+                  attendanceProvider.getAddressFromLatLng(attendanceProvider.currentPosition as Position);
+                }
+                attendanceProvider.animateMap();
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (BuildContext context) {
+                      return const PunchBottomSheet();
+                    });
               },
+              style: OutlinedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.onSecondary.withOpacity(0.3),
+                foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                minimumSize: const Size.fromHeight(48),
+                side: BorderSide(color: Theme.of(context).colorScheme.onSecondary, width: 1.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // <-- Radius
+                ),
+              ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.logout),
+                  const Icon(Icons.logout),
                   SizedBox(
                     width: 4.w,
                   ),
@@ -248,7 +253,7 @@ class AttendanceScreen extends StatelessWidget {
                 Container(
                   height: 6.h,
                   width: 20.w,
-                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: BorderRadius.all(Radius.circular(20))),
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
                 ),
                 SizedBox(
                   width: 4.w,
@@ -256,7 +261,7 @@ class AttendanceScreen extends StatelessWidget {
                 Container(
                   height: 6.h,
                   width: 6.h,
-                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: BorderRadius.all(Radius.circular(20))),
+                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
                 ),
               ],
             ),
