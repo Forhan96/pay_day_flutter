@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pay_day/pay_day_app.dart';
 import 'package:pay_day/src/providers/attendance_provider.dart';
@@ -8,6 +9,8 @@ import 'di_container.dart' as di;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   await di.init(); //initializing Dependency Injection
   runApp(
     MultiProvider(

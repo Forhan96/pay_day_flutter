@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "705027105240",
+    "project_id": "payday-65930",
+    "storage_bucket": "payday-65930.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705027105240:android:bb14633002cf84022012ad",
+        "android_client_info": {
+          "package_name": "com.pay_day.pay_day"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705027105240-fb25f4bsfi9e38ktobm4ptkloa7gbqua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZDMoUGqcem1EiBucni1nCqsGPqyvwM98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705027105240-fb25f4bsfi9e38ktobm4ptkloa7gbqua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
