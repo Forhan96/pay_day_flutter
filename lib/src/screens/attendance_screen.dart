@@ -23,12 +23,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) async {
+    Future.delayed(Duration.zero, () async {
       AttendanceProvider attendanceProvider = Provider.of<AttendanceProvider>(context, listen: false);
-      attendanceProvider.updateTime();
-      timer = Timer.periodic(const Duration(seconds: 60), (Timer t) => attendanceProvider.updateTime());
+
       attendanceProvider.updateTime();
       attendanceProvider.getIp();
+    });
+    WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) async {
+      AttendanceProvider attendanceProvider = Provider.of<AttendanceProvider>(context, listen: false);
+      timer = Timer.periodic(const Duration(seconds: 60), (Timer t) => attendanceProvider.updateTime());
     });
   }
 
@@ -253,7 +256,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 Container(
                   height: 6.h,
                   width: 20.w,
-                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
+                  decoration:
+                      BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
                 ),
                 SizedBox(
                   width: 4.w,
@@ -261,7 +265,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 Container(
                   height: 6.h,
                   width: 6.h,
-                  decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
+                  decoration:
+                      BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
                 ),
               ],
             ),

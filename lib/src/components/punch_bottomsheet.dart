@@ -17,7 +17,7 @@ class PunchBottomSheet extends StatelessWidget {
     TextEditingController noteController = TextEditingController();
     return Consumer<AttendanceProvider>(builder: (context, attendanceProvider, child) {
       return Container(
-        height: MediaQuery.of(context).size.height * 0.80,
+        height: MediaQuery.of(context).size.height * 0.85,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onSecondary,
           borderRadius: const BorderRadius.only(
@@ -48,7 +48,10 @@ class PunchBottomSheet extends StatelessWidget {
                   SizedBox(),
                   Text(
                     'Punch In',
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        ?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
                   ),
                   IconButton(
                     onPressed: () {
@@ -164,8 +167,8 @@ class PunchBottomSheet extends StatelessWidget {
                             child: GoogleMap(
                               mapType: MapType.normal,
                               initialCameraPosition: CameraPosition(
-                                target:
-                                    LatLng(attendanceProvider.currentPosition?.latitude ?? 37.42796133580664, attendanceProvider.currentPosition?.longitude ?? -122.085749655962),
+                                target: LatLng(attendanceProvider.currentPosition?.latitude ?? 37.42796133580664,
+                                    attendanceProvider.currentPosition?.longitude ?? -122.085749655962),
                                 zoom: 17,
                               ),
                               myLocationEnabled: true,
