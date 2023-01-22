@@ -10,6 +10,9 @@ class AttendanceProvider extends ChangeNotifier {
   int _totalMinutes = 0;
   int _minutes = 0;
   int _hours = 0;
+  int _remainingTotalMinutes = 0;
+  int _remainingMinutes = 0;
+  int _remainingHours = 0;
   DateTime? _dateTime;
   String? _inTime;
   String? _outTime;
@@ -22,6 +25,10 @@ class AttendanceProvider extends ChangeNotifier {
 
   int get totalMinutes => _totalMinutes;
   int get minutes => _minutes;
+  int get remainingHours => _remainingHours;
+
+  int get remainingTotalMinutes => _remainingTotalMinutes;
+  int get remainingMinutes => _remainingMinutes;
   int get hours => _hours;
   DateTime? get dateTime => _dateTime;
   String? get inTime => _inTime;
@@ -45,13 +52,18 @@ class AttendanceProvider extends ChangeNotifier {
       notifyListeners();
     }
     if (_dateTime != null) {
-      _outTime = DateFormat.jm().format(_dateTime!);
+      // _outTime = DateFormat.jm().format(_dateTime!);
       notifyListeners();
     }
 
     _totalMinutes = DateTime.now().difference(_dateTime ?? DateTime.now()).inMinutes;
     _minutes = _totalMinutes % 60;
     _hours = (_totalMinutes - _minutes) ~/ 60;
+
+    _remainingTotalMinutes = 540 - _totalMinutes;
+    _remainingMinutes = _remainingTotalMinutes % 60;
+    _remainingHours = (_remainingTotalMinutes - _remainingMinutes) ~/ 60;
+
     notifyListeners();
   }
 

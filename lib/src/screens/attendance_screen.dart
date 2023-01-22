@@ -99,127 +99,134 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               ],
             ),
             SizedBox(
-              height: 64.h,
+              height: 48.h,
             ),
-            SleekCircularSlider(
-              min: 0,
-              max: 560,
-              initialValue: attendanceProvider.totalMinutes.toDouble(),
-              appearance: CircularSliderAppearance(
-                size: 200,
-                startAngle: 185,
-                angleRange: 170,
-                customWidths: CustomSliderWidths(
-                  trackWidth: 13,
-                  progressBarWidth: 12,
-                ),
-                customColors: CustomSliderColors(
-                  trackColor: Theme.of(context).colorScheme.onSecondary.withOpacity(0.1),
-                  progressBarColor: Theme.of(context).colorScheme.onSecondary,
-                ),
-              ),
-              innerWidget: (double value) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: 32.h,
+            Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              clipBehavior: Clip.none,
+              children: [
+                SleekCircularSlider(
+                  min: 0,
+                  max: 560,
+                  initialValue: attendanceProvider.totalMinutes.toDouble(),
+                  appearance: CircularSliderAppearance(
+                    size: 200,
+                    startAngle: 185,
+                    angleRange: 170,
+                    customWidths: CustomSliderWidths(
+                      trackWidth: 13,
+                      progressBarWidth: 12,
                     ),
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: '${attendanceProvider.hours} ',
-                          style: Theme.of(context).textTheme.headline2?.copyWith(
+                    customColors: CustomSliderColors(
+                      trackColor: Theme.of(context).colorScheme.onSecondary.withOpacity(0.1),
+                      progressBarColor: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                  ),
+                  innerWidget: (double value) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: '${attendanceProvider.hours} ',
+                              style: Theme.of(context).textTheme.headline2?.copyWith(
+                                    color: Theme.of(context).colorScheme.onSecondary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            TextSpan(
+                              text: 'h  ',
+                              style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                            ),
+                            TextSpan(
+                              text: '${attendanceProvider.minutes} ',
+                              style: Theme.of(context).textTheme.headline2?.copyWith(
+                                    color: Theme.of(context).colorScheme.onSecondary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            TextSpan(
+                              text: 'm',
+                              style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                            ),
+                          ]),
+                        ),
+                        Text(
+                          "Worked",
+                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
                                 color: Theme.of(context).colorScheme.onSecondary,
-                                fontWeight: FontWeight.bold,
                               ),
                         ),
-                        TextSpan(
-                          text: 'h  ',
-                          style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
-                        ),
-                        TextSpan(
-                          text: '${attendanceProvider.minutes} ',
-                          style: Theme.of(context).textTheme.headline2?.copyWith(
-                                color: Theme.of(context).colorScheme.onSecondary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        TextSpan(
-                          text: 'm',
-                          style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Theme.of(context).colorScheme.onSecondary),
-                        ),
-                      ]),
-                    ),
-                    Text(
-                      "Worked",
-                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
-                    ),
-                  ],
-                );
-              },
-            ),
-            IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TimeItem(
-                    name: 'In',
-                    nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                    value: attendanceProvider.inTime ?? '-',
-                    valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                    showDivider: false,
+                      ],
+                    );
+                  },
+                ),
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TimeItem(
+                        name: 'In',
+                        nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                        value: attendanceProvider.inTime ?? '-',
+                        valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                        showDivider: false,
+                      ),
+                      TimeItem(
+                        name: 'Out',
+                        nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                        value: attendanceProvider.outTime ?? '-',
+                        valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                        dividerColor: Theme.of(context).colorScheme.onSecondary,
+                      ),
+                      TimeItem(
+                        name: 'Balance',
+                        nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                        value: '-${attendanceProvider.remainingHours}h ${attendanceProvider.remainingMinutes}m',
+                        valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                        dividerColor: Theme.of(context).colorScheme.onSecondary,
+                      ),
+                    ],
                   ),
-                  TimeItem(
-                    name: 'Out',
-                    nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                    value: '11:00',
-                    valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                    dividerColor: Theme.of(context).colorScheme.onSecondary,
-                  ),
-                  TimeItem(
-                    name: 'Balance',
-                    nameStyle: Theme.of(context).textTheme.subtitle2?.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                    value: '-2h 39m',
-                    valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                    dividerColor: Theme.of(context).colorScheme.onSecondary,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             SizedBox(
-              height: 24.h,
+              height: 30.h,
             ),
             OutlinedButton(
               onPressed: () async {
-                await attendanceProvider.getUserCurrentLocation();
-                if (attendanceProvider.currentPosition != null) {
-                  attendanceProvider.getAddressFromLatLng(attendanceProvider.currentPosition as Position);
-                }
-                attendanceProvider.animateMap();
                 showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     builder: (BuildContext context) {
                       return const PunchBottomSheet();
                     });
+                await attendanceProvider.getUserCurrentLocation();
+                if (attendanceProvider.currentPosition != null) {
+                  attendanceProvider.getAddressFromLatLng(attendanceProvider.currentPosition as Position);
+                }
+                attendanceProvider.animateMap();
               },
               style: OutlinedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.onSecondary.withOpacity(0.3),
@@ -254,8 +261,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: 6.h,
-                  width: 20.w,
+                  height: 7.h,
+                  width: 22.w,
                   decoration:
                       BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
                 ),
@@ -263,8 +270,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   width: 4.w,
                 ),
                 Container(
-                  height: 6.h,
-                  width: 6.h,
+                  height: 7.h,
+                  width: 7.h,
                   decoration:
                       BoxDecoration(color: Theme.of(context).colorScheme.onSecondary, borderRadius: const BorderRadius.all(Radius.circular(20))),
                 ),

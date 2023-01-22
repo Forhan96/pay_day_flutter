@@ -17,7 +17,7 @@ class PunchBottomSheet extends StatelessWidget {
     TextEditingController noteController = TextEditingController();
     return Consumer<AttendanceProvider>(builder: (context, attendanceProvider, child) {
       return Container(
-        height: MediaQuery.of(context).size.height * 0.85,
+        height: MediaQuery.of(context).size.height * 0.88,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onSecondary,
           borderRadius: const BorderRadius.only(
@@ -26,6 +26,7 @@ class PunchBottomSheet extends StatelessWidget {
           ),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
@@ -45,7 +46,7 @@ class PunchBottomSheet extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(),
+                  const SizedBox(),
                   Text(
                     'Punch In',
                     style: Theme.of(context)
@@ -57,15 +58,15 @@ class PunchBottomSheet extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                   ),
                   // Icon(Icons.clear),
                 ],
               ),
             ),
-            SizedBox(
-              height: 12.h,
-            ),
+            // SizedBox(
+            //   height: 12.h,
+            // ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -77,7 +78,7 @@ class PunchBottomSheet extends StatelessWidget {
                       children: [
                         TimeItem(
                           name: 'In',
-                          value: '-',
+                          value: attendanceProvider.inTime ?? '-',
                           valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
                                 color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
                                 fontWeight: FontWeight.bold,
@@ -86,7 +87,7 @@ class PunchBottomSheet extends StatelessWidget {
                         ),
                         TimeItem(
                           name: 'Out',
-                          value: '11:00',
+                          value: attendanceProvider.outTime ?? '-',
                           valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
                                 color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
                                 fontWeight: FontWeight.bold,
@@ -94,7 +95,7 @@ class PunchBottomSheet extends StatelessWidget {
                         ),
                         TimeItem(
                           name: 'Total',
-                          value: '-2h 39m',
+                          value: '${attendanceProvider.hours}h ${attendanceProvider.minutes}m',
                           valueStyle: Theme.of(context).textTheme.headline6?.copyWith(
                                 color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
                                 fontWeight: FontWeight.bold,
@@ -191,7 +192,7 @@ class PunchBottomSheet extends StatelessWidget {
                                 }
                               },
                               child: Container(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).colorScheme.onSecondary,
                                   borderRadius: BorderRadius.circular(8),
@@ -200,7 +201,7 @@ class PunchBottomSheet extends StatelessWidget {
                                       color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                                       blurRadius: 2.0,
                                       spreadRadius: 0.0,
-                                      offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                      offset: const Offset(2.0, 2.0), // shadow direction: bottom right
                                     )
                                   ],
                                 ),
@@ -224,14 +225,19 @@ class PunchBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
+            // Expanded(
+            //   child: SizedBox(),
+            // ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
               child: Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () {},
-                      child: Text("Cancel"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Cancel"),
                     ),
                   ),
                   SizedBox(
@@ -240,7 +246,7 @@ class PunchBottomSheet extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Text("Punch In"),
+                      child: const Text("Punch In"),
                     ),
                   ),
                 ],

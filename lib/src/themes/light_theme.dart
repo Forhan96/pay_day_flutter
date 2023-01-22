@@ -19,7 +19,7 @@ ThemeData buildLightTheme(BuildContext context) {
       shadowColor: AppColors.black.withOpacity(0.2),
       elevation: 1,
     ),
-    bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.transparent),
+    bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Colors.transparent),
     // buttonTheme: ButtonThemeData(
     //   buttonColor: Colors.yellow,
     //   textTheme: ButtonTextTheme.primary, //  <-- dark text for light background
