@@ -51,7 +51,7 @@ ThemeData buildLightTheme(BuildContext context) {
     colorScheme: const ColorScheme.light(
       secondary: AppColors.black,
       onSecondary: Colors.white,
-      // onTertiary: Colors.black,
+      onTertiary: Colors.grey,
       tertiary: AppColors.complementaryColor,
       onTertiaryContainer: AppColors.greenColor,
       // outline: AppColors.complementaryColor,

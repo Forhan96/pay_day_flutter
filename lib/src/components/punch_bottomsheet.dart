@@ -48,11 +48,8 @@ class PunchBottomSheet extends StatelessWidget {
                 children: [
                   const SizedBox(),
                   Text(
-                    'Punch In',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
+                    attendanceProvider.attendance != null ? "Punch Out" : "Punch In",
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
                   ),
                   IconButton(
                     onPressed: () {
@@ -168,8 +165,8 @@ class PunchBottomSheet extends StatelessWidget {
                             child: GoogleMap(
                               mapType: MapType.normal,
                               initialCameraPosition: CameraPosition(
-                                target: LatLng(attendanceProvider.currentPosition?.latitude ?? 37.42796133580664,
-                                    attendanceProvider.currentPosition?.longitude ?? -122.085749655962),
+                                target:
+                                    LatLng(attendanceProvider.currentPosition?.latitude ?? 37.42796133580664, attendanceProvider.currentPosition?.longitude ?? -122.085749655962),
                                 zoom: 17,
                               ),
                               myLocationEnabled: true,
@@ -225,9 +222,7 @@ class PunchBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
-            // Expanded(
-            //   child: SizedBox(),
-            // ),
+
             Padding(
               padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
               child: Row(
@@ -245,8 +240,19 @@ class PunchBottomSheet extends StatelessWidget {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("Punch In"),
+                      onPressed: () async {
+                        if (attendanceProvider.attendance == null) {
+                          await attendanceProvider.punchIn(noteController.text);
+                        } else {
+                          await attendanceProvider.punchOut(noteController.text);
+                        }
+                        // attendanceProvider.getAttendance();
+                        await attendanceProvider.getActiveAttendance();
+                        attendanceProvider.updateTime();
+                        attendanceProvider.getTodayLogs();
+                        Navigator.pop(context);
+                      },
+                      child: Text(attendanceProvider.attendance != null ? "Punch Out" : "Punch In"),
                     ),
                   ),
                 ],
